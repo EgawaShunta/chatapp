@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'intern.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mydb',
+        'USER': 'egawashunta',
+        'PASSWORD': 'egawanco',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -121,6 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 AUTH_USER_MODEL = 'myapp.User'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -129,3 +135,10 @@ MEDIA_URL = '/media/'
 LOGIN_URL = 'login_view'
 LOGIN_REDIRECT_URL = '/friends'
 LOGOUT_REDIRECT_URL = '/index'
+
+# ...
+try:
+    from .local_settings import *
+except ImportError:
+    # local_settings.py が存在しなくてもエラーにならないようにする
+    pass
